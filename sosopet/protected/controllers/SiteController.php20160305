@@ -1,0 +1,323 @@
+<?php
+
+class SiteController extends Controller
+{
+
+	public function beforeAction($action) {
+		if($action->getId()=='index') {
+			$this->layout = Shop::module()->layout;
+		}
+		return parent::beforeAction($action);
+	}
+	
+	public function filters()
+	{
+		return array(
+				'accessControl',
+				);
+	}
+	
+	public function accessRules() {
+		return array(
+				array('allow',
+					'actions'=>array('index', 'error', 'contact', 'captcha', 'logout', 'faq', 'testimonial','howitworks', 'aboutus','contactajax','privacypolicy'),
+					'users' => array('*'),
+					),
+				array('deny',  // deny all other users
+					'users'=>array('*'),
+					),
+				);
+	}
+
+	/**
+	 * Declares class-based actions.
+	 */
+	public function actions()
+	{
+		return array(
+			// captcha action renders the CAPTCHA image displayed on the contact page
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+			// page action renders "static" pages stored under 'protected/views/site/pages'
+			// They can be accessed via: index.php?r=site/page&view=FileName
+			'page'=>array(
+				'class'=>'CViewAction',
+			),
+		);
+	}
+
+	/**
+	 * This is the default 'index' action that is invoked
+	 * when an action is not explicitly requested by users.
+	 */
+	public function actionIndex()
+	{
+		// renders the view file 'protected/views/site/index.php'
+		// using the default layout 'protected/views/layouts/main.php'
+				
+		$this->redirect($this->createUrl('shop/shop/index/'));			
+		//$this->render('index');
+	}
+
+	/**
+	 * This is the action to handle external exceptions.
+	 */
+	public function actionError()
+	{
+	    if($error=Yii::app()->errorHandler->error)
+	    {
+	    	if(Yii::app()->request->isAjaxRequest)
+	    		echo $error['message'];
+	    	else
+	        	$this->render('error', $error);
+	    }
+	}
+
+	/**
+	 * Displays the contact page
+	 */
+	public function actionContact()
+	{
+	$model2=new ContactajaxForm;	
+		$model=new ContactForm;
+		if(isset($_POST['ContactForm']))
+		{
+			$model->attributes=$_POST['ContactForm'];
+			if($model->validate())
+			{
+				Yii::import('profile.models.*');
+				//$headers="From: {$model->email}\r\nReply-To: {$model->email}";
+				//mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
+				//Yii::app()->user->setFlash('contact','Enquiry submitted.');
+				$subject='You have got an enquiry from [ '.$model->name.'] - [ '.$model->email.']';
+				//$body='<html><body>[Enquirer Name]<br/>[Enquirer Email]<br/>[Enquirer Content]<br/></body><html>';
+				echo Yii::trace(CVarDumper::dumpAsString(Yii::app()->basepath.'/templates/mail/contactus.tp'),'vardump10');
+				$body=file_get_contents(Yii::app()->basepath.'/templates/mail/contactus.tp');
+				$body = str_replace('[Enquirer Name]', $model->name, $body);
+				$body = str_replace('[Enquirer Email]', $model->email, $body);
+				$body = str_replace('[Enquirer Content]', $model->body, $body);
+				$profile = YumProfile::model()->findByAttributes(array('user_id'=>1,));	//admin email
+				if (isset($profile)){
+					$this->sendNotification(AppProfile::model()->getEmailUsername(),$profile->email,$subject,$body);
+					Shop::setFlash('Enquiry submitted.');
+					$this->refresh();
+				} else{
+					Shop::setFlash('Failed to submit enquiry.');
+					$this->refresh();
+				}
+					
+				/*
+				
+				$profile = YumProfile::model()->findByAttributes(array('user_id'=>$chat->recipient_id,));
+			if (isset($profile))
+				return $this->sendNotification(AppProfile::model()->getEmailUsername(),$profile->email,$chat->title,$chatmsgform->message);
+			else
+				return false;
+				*/
+			}
+		}
+		$this->render('contact',array('model'=>$model));
+		
+		//$this->render('contact');
+	}
+
+	/**
+	 * Displays the login page
+	 */
+	public function actionLogin()
+	{
+		$model=new LoginForm;
+
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+
+		// collect user input data
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->login())
+				$this->redirect(Yii::app()->user->returnUrl);
+		}
+		// display the login form
+		$this->render('login',array('model'=>$model));
+	}
+
+	/**
+	 * Logs out the current user and redirect to homepage.
+	 */
+	public function actionLogout()
+	{
+		Yii::app()->user->logout();
+		$this->redirect(Yii::app()->homeUrl);
+	}
+	
+	public function actionAbout()
+	{
+		$this->render('about');
+	}
+	
+	public function actionAboutUs2()
+	{
+		$this->render('about_us');
+	}
+	
+	public function actionAboutUsMain()
+	{
+		$this->render('about_us_main');
+	}
+	
+	public function actionAboutUsMain2()
+	{
+		$this->render('about_us_main2');
+	}
+	
+	public function actionContactUs()
+	{
+		$this->render('contact_us');
+	}
+	public function actionCs()
+	{
+		$this->render('cs');
+	}
+	
+	public function actionCsMain()
+	{
+		$this->render('cs_main');
+	}
+	
+	public function actionHelp()
+	{
+		$this->render('help');
+	}
+	
+	public function actionHome()
+	{
+		$this->render('home');
+	}
+	
+	public function actionPages()
+	{
+		$this->render('pages');
+	}
+	
+	public function actionPressRoom()
+	{
+		$this->render('press_room');
+	}
+	
+	public function actionPrivacy()
+	{
+		$this->render('privacy');
+	}
+	
+	public function actionReleaseDates()
+	{
+		$this->render('release_dates');
+	}
+	
+	public function actionSecureShopping()
+	{
+		$this->render('secure_shopping');
+	}
+	
+	public function actionStayConnected()
+	{
+		$this->render('stay_connected');
+	}
+	
+	public function actionTerms()
+	{
+		$this->render('terms');
+	}
+	
+	public function actionTermsMain()
+	{
+		$this->render('terms_main');
+	}
+	
+	public function actionFaq()
+	{
+		$this->render('faq');
+	}
+	
+	public function actionTutorial()
+	{
+		$this->render('tutorial');
+	}
+	
+	public function actionTestimonial()
+	{
+		$this->render('testimonial');
+	}
+	
+	public function actionHowitworks()
+	{
+		$this->render('howitworks');
+	}
+	public function actionPrivacyPolicy()
+	{
+		$this->render('privacypolicy');
+	}
+
+        public function actionAboutUs()
+        {
+                $this->render('aboutus');
+        }
+	
+	private function sendNotification($from, $to, $subject, $body)
+	{
+		Yii::import('user.components.*');
+		//echo Yii::trace(CVarDumper::dumpAsString('sendnotify'),'vardump10');
+		$mail = array(
+			//'from' => AppProfile::model()->getEmailUsername(),
+			'from' => $from,
+			'to' => $to,//$user->profile->email,
+			'subject' => $subject,
+			'body' => $body,
+		);
+		$sent = YumMailer::send($mail);
+
+		return $sent;
+	}
+
+	public function actionContactajax()
+        {
+
+                $model=new ContactajaxForm;
+                if(isset($_POST['ContactajaxForm']))
+                {
+                        $model->attributes=$_POST['ContactajaxForm'];
+                        if($model->validate())
+                        {	
+				echo "V";
+                                Yii::import('profile.models.*');
+                                $subject='You have got an enquiry from [ '.$model->name.'] - [ '.$model->email.']';
+                                echo Yii::trace(CVarDumper::dumpAsString(Yii::app()->basepath.'/templates/mail/contactus.tp'),'vardump10');
+                                $body=file_get_contents(Yii::app()->basepath.'/templates/mail/contactus.tp');
+                                $body = str_replace('[Enquirer Name]', $model->name, $body);
+                                $body = str_replace('[Enquirer Email]', $model->email, $body);
+                                $body = str_replace('[Enquirer Content]', $model->body, $body);
+                                $profile = YumProfile::model()->findByAttributes(array('user_id'=>1,)); //admin email
+                                if (isset($profile)){
+                                        $this->sendNotification(AppProfile::model()->getEmailUsername(),$profile->email,$subject,$body);
+	echo "200";
+                                } else{
+					echo "400";
+                                }
+			}
+			echo "OK";
+
+                }
+		echo "PK";
+                //$this->render('contactajax',array('model'=>$model));
+                //$this->render('contactajax');
+        }
+	
+}

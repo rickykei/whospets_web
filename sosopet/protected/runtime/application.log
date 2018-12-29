@@ -1,0 +1,10 @@
+2016/05/11 22:08:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "0".' in /vhost/sosopet/framework/web/CController.php:483
+Stack trace:
+#0 /vhost/sosopet/framework/web/CController.php(270): CController->missingAction('0')
+#1 /vhost/sosopet/framework/web/CWebApplication.php(283): CController->run('0')
+#2 /vhost/sosopet/framework/web/CWebApplication.php(141): CWebApplication->runController('shop/products/0')
+#3 /vhost/sosopet/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /vhost/sosopet/sosopet/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/en/shop/products/0/5
+---

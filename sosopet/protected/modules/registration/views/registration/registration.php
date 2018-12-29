@@ -1,0 +1,62 @@
+<div class="container">
+    <br>
+	<div>
+		<header class="on_the_sides">
+			<div class="left_side">
+				<h2><?php echo Yii::t('shop','Register an account with us');?></h2>
+                <br>
+			</div>
+		</header><!--/ .on_the_sides-->
+		<div class="fieldset">
+			<?php echo CHtml::errorSummary(array($form, $profile)); ?>
+			<?php $activeform = $this->beginWidget('CActiveForm', array(
+				  'id'=>'registration-form',
+				  'enableAjaxValidation'=>true,
+				  'enableClientValidation'=>true,
+				  'focus'=>array($form,'username'),
+				));
+			?>
+			<ul class="form-list">
+				<li>
+					<?php echo $activeform->labelEx($form,'username'); ?>
+					<?php echo $activeform->textField($form,'username'); ?>
+				</li>
+				<li>
+					<?php echo $activeform->labelEx($profile,'email'); ?>
+					<?php echo $activeform->textField($profile,'email'); ?>
+				</li>
+				<li>
+					<?php echo $activeform->labelEx($form,'password'); ?>
+					<?php echo $activeform->passwordField($form,'password'); ?>
+				</li>
+				<li>
+					<?php echo $activeform->labelEx($form,'verifyPassword'); ?>
+					<?php echo $activeform->passwordField($form,'verifyPassword'); ?>
+				</li>
+				<?php if(extension_loaded('gd')
+				&& !Yum::module()->debug
+				&& Yum::module('registration')->enableCaptcha): ?>
+				<li>
+					<div class="row-fluid">
+					<div class="span12">
+						<?php echo CHtml::activeLabelEx($form,'verifyCode'); ?>
+					<div>
+						<?php $this->widget('CCaptcha'); ?>
+						<?php echo CHtml::activeTextField($form,'verifyCode'); ?>
+					</div>
+					<p class="hint">
+						<?php echo Yii::t('shop','Please enter the letters as they are shown in the image above.');?>
+						<br/>
+						<?php echo Yii::t('shop','Letters are not case-sensitive.');?>
+					</div></div>
+				</li>
+				<?php endif; ?>
+				
+				<li class="v_centered">
+					<button class="button_blue middle_btn"><?php echo Yii::t('shop','Register');?></button>
+				</li>
+			</ul>
+			<?php $this->endWidget(); ?>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,1 @@
+Hello, {username}. Please activate your account with this url: {activation_url}

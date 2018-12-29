@@ -1,0 +1,152 @@
+<main class="col-md-9 col-sm-8">
+<?php $form=$this->beginWidget('CActiveForm', array(
+			'id'=>'profile-form',
+		)); ?>
+<?php 
+	Yum::renderFlash();
+	echo $form->errorSummary(array($user, $changePassword, $profile)); 
+?>
+<section class="section_offset">
+	<div class="theme_box">
+	
+	<h3>Account Info</h3>
+	 
+	<ul>
+	<li class="row">
+		<div class="col-sm-6">
+			<label>Avatar</label><?php echo $user->getAvatar(); ?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+			<br/>
+			<a class="button_blue middle_btn" href="<?php echo Yii::app()->request->baseUrl; ?>/avatar/avatar/editAvatar" title="Upload Avatar Image">Upload Avatar Image</a>
+			<br/>
+			<br/>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($user, 'username');
+			echo $user->username;
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($changePassword, 'currentPassword');
+			echo $form->textField($changePassword, 'currentPassword');
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($changePassword, 'password');
+			echo $form->textField($changePassword, 'password');
+		?>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($changePassword, 'verifyPassword');
+			echo $form->textField($changePassword, 'verifyPassword');
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($profile, 'email');
+			echo $form->textField($profile, 'email');
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($profile, 'firstname');
+			echo $form->textField($profile, 'firstname');
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($profile, 'lastname');
+			echo $form->textField($profile, 'lastname');
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php 
+			echo $form->labelEx($profile, 'gender');
+			//echo $form->dropDownList($profile, 'gender', array('M'=>'Male', 'F'=>'Female',), array('prompt' => 'Please select'));
+			echo $form->dropDownList($profile, 'gender', array('M'=>'Male', 'F'=>'Female',));
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-6">
+		<?php
+			echo $form->labelEx($profile, 'birthday');
+			$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'model'=>$profile,
+			'attribute'=>'birthday',
+			'value'=>$profile->birthday,
+			// additional javascript options for the date picker plugin
+			'options'=>array(
+				'showAnim'=>'fold',
+				'changeMonth'=>true,
+				'changeYear'=>true,
+				'yearRange'=>'1900:'.date('Y'),
+				'showButtonPanel'=>true,
+				'autoSize'=>true,
+				'dateFormat'=>'yy-mm-dd',
+				'defaultDate'=>$profile->birthday,
+				),
+			'htmlOptions'=>array(
+				'class'=>'date',
+				),
+			)
+			); 
+		?>
+		</div>
+	</li>
+	<li class="row">
+		<div class="col-sm-12">
+		<?php
+			echo $form->labelEx($profile, 'bio');
+			echo $form->textArea($profile, 'bio', array('maxlength' => 3000));
+		?>
+		</div>
+	</li>
+	</ul>
+	</div>
+</section>
+<section class="section_offset">
+	<div class="theme_box">
+	<h3>Notifications</h3>
+		<ul>
+		<li class="row">
+			<div class="col-sm-6">
+			<?php
+				//echo CHtml::activeCheckBox($profile, 'notification');
+				echo CHtml::activeHiddenField($profile, 'notification');
+			?><!--<label>Receive email notification for incoming private messages</label><br>-->
+			<?php
+				echo CHtml::activeCheckBox($profile, 'newsletter');
+			?><label>Subscribe to the newsletter</label>
+			</div>
+		</li>
+		</ul>
+	</div>
+</section>
+<section class="section_offset">
+	<input class="button_blue middle_btn" type="submit" value="Save" />
+</section>
+<?php $this->endWidget(); ?>
+</main><!--/ [col]-->

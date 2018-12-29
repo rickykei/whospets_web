@@ -1,0 +1,16 @@
+<div style="height:30px;">
+<div style="height: auto;  overflow: hidden;">
+<?php
+	$folder = Shop::module()->chatThumbImagesFolder;
+	$images=$message->images;
+	echo '<div style="float:none;width:auto;overflow:hidden;position:relative;">';
+	if($images){
+		foreach ($images as $image)
+			echo '<img height="50" src="'.Yii::app()->baseUrl.'/'.$folder.'/'.$image->filename.'" />';
+	}else{
+		echo CHtml::image(Shop::register('no-pic.jpg'));
+	}
+	echo '</div>';
+	
+?>
+</div>

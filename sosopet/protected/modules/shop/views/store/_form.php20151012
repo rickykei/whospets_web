@@ -1,0 +1,115 @@
+<?php 
+	$form=$this->beginWidget('CActiveForm', array(
+								'action'=>Yii::app()->request->baseUrl.'/shop/store/update', 
+								'id' => $model->id, 
+								'method'=>'POST', 
+								'htmlOptions'=>array(
+									'enctype' => 'multipart/form-data')
+								)
+							);
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit()
+{
+	$('#<?php echo $form->id ?>').submit();
+}
+-->
+</script>
+<main class="col-md-9 col-sm-8">
+</main><!--/ [col]-->
+<div class="col-main">
+	 <div class="shipping-form-container">
+		<?php 
+			if (Yum::module())
+				Yum::renderFlash();
+			echo $form->errorSummary(array($model)); 		
+		?>
+		
+		<?php 
+		//	echo $form->labelEx($model,'store_banner'); 
+		//	echo $model->getStoreBanner();
+		?>
+		<?php //echo CHtml::activeFileField($model, 'store_banner'); ?>
+		<?php 
+			//echo $form->labelEx($model,'store_logo'); 
+			//echo $model->getStoreLogo();
+		?>
+		<?php //echo CHtml::activeFileField($model, 'store_logo'); ?>
+		<br>
+		<br>
+		<div class="form-title">My Pet's Home</div>
+		<ul class="form-fields">
+		<?php  $form->hiddenField($model,'user_id',array('value'=>Yii::app()->user->id)); ?>
+		<li>
+			<?php// echo $form->labelEx($model,'store_name'); ?>
+			<?php// echo $form->textField($model,'store_name',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'store_description'); ?>
+			<?php echo $form->textArea($model,'store_description',array('rows'=>2, 'cols'=>90)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'store_email'); ?>
+			<?php echo $form->textField($model,'store_email',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'store_phone'); ?>
+			<?php echo $form->textField($model,'store_phone',array('size'=>50,'maxlength'=>50)); ?>
+		</li>
+		</ul>
+		
+		
+		<ul class="form-fields">
+			<li>
+				<?php echo $form->labelEx($model,'policy'); ?>
+				<?php echo $form->textArea($model,'policy',array('rows'=>2, 'cols'=>90)); ?>
+			</li>
+		</ul>
+		
+		<div class="form-title">Share</div>
+		<ul class="form-fields">
+		<?php
+			echo $form->labelEx($model,'share_on_fb'); 
+			echo CHtml::activeCheckBox($model, 'share_on_fb');
+		?>
+		</ul>
+		<br><br>	
+		<div class="form-title">Hoop Up</div>
+		<ul class="form-fields">
+		
+		<li>
+			<?php echo $form->labelEx($model,'hook_paypal'); ?>
+			<?php echo $form->textField($model,'hook_paypal',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'hook_facebook'); ?>
+			<?php echo $form->textField($model,'hook_facebook',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'hook_google'); ?>
+			<?php echo $form->textField($model,'hook_google',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'hook_twitter'); ?>
+			<?php echo $form->textField($model,'hook_twitter',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'hook_instagram'); ?>
+			<?php echo $form->textField($model,'hook_instagram',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		<li>
+			<?php echo $form->labelEx($model,'hook_pinterest'); ?>
+			<?php echo $form->textField($model,'hook_pinterest',array('size'=>60,'maxlength'=>100)); ?>
+		</li>
+		</ul>
+		
+		<a class="colors-btn" href="javascript:submit();" title="Save"><span><span>Save</span></span></a>
+	</div>
+	<div class="clearfix"></div>
+	<br>
+</div>
+<?php $this->endWidget(); ?>
+
+
+
