@@ -68,7 +68,7 @@ class Products extends CActiveRecord
 			//array('title, category_id,country_id, status, tax_id, price, condition, sub_category', 'required'),
 			array('title', 'required'),
 			array('price, discount', 'type', 'type'=>'float'),
-			array('product_id, category_id, country_id,status, store_id, quantity, view', 'numerical', 'integerOnly'=>true),
+			array('product_id, category_id,sub_category, country_id,status, store_id, quantity, view', 'numerical', 'integerOnly'=>true),
 			array('title, price, language, discount', 'length', 'max'=>45),
 			array('keywords, questions', 'length', 'max'=>255),
 			array('last_seen_appearance', 'length', 'max'=>100),

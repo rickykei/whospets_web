@@ -34,10 +34,10 @@
 			$default_image=$product->getDefaultImage();
 			$images=$product->images;
 			if($default_image){
-				$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.$default_image->filename;
+				$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.$default_image->filename;
 			}else{
 				if($images)
-					$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.current($images)->filename;
+					$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.current($images)->filename;
 				else
 					$image_link=Shop::register('no-pic.jpg');
 			}
@@ -57,10 +57,10 @@
 			$default_image=$product->getDefaultImage();
 			$images=$product->images;
 			if($default_image){
-				$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.$default_image->filename;
+				$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.$default_image->filename;
 			}else{
 				if($images)
-					$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.current($images)->filename;
+					$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.current($images)->filename;
 				else
 					$image_link=Shop::register('no-pic.jpg');
 			}
@@ -81,10 +81,10 @@
 			$default_image=$product->getDefaultImage();
 			$images=$product->images;
 			if($default_image){
-				$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.$default_image->filename;
+				$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.$default_image->filename;
 			}else{
 				if($images)
-					$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.current($images)->filename;
+					$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.current($images)->filename;
 				else
 					$image_link=Shop::register('no-pic.jpg');
 			}
@@ -104,10 +104,10 @@
 			$default_image=$product->getDefaultImage();
 			$images=$product->images;
 			if($default_image){
-				$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.$default_image->filename;
+				$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.$default_image->filename;
 			}else{
 				if($images)
-					$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.current($images)->filename;
+					$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.current($images)->filename;
 				else
 					$image_link=Shop::register('no-pic.jpg');
 			}
@@ -127,10 +127,10 @@
 			$default_image=$product->getDefaultImage();
 			$images=$product->images;
 			if($default_image){
-				$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.$default_image->filename;
+				$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.$default_image->filename;
 			}else{
 				if($images)
-					$image_link=Yii::app()->baseUrl.'/'.$image_folder.'/'.current($images)->filename;
+					$image_link=Yii::app()->baseUrl.'/'.$thumb_image_folder.'/'.current($images)->filename;
 				else
 					$image_link=Shop::register('no-pic.jpg');
 			}
