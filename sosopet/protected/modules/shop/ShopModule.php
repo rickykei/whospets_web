@@ -16,6 +16,11 @@ class ShopModule extends CWebModule
 	public $useWithYum = false;
 
 	// Names of the tables
+	public $sellsTable='app_sell';
+	public $qnasTable='app_qna';
+	public $lifestylesTable='app_post';
+	public $appImageTable='app_image';
+	
 	public $countryTable = 'shop_country';
 	public $categoryTable = 'shop_category';
 	public $productsTable = 'shop_products';
@@ -37,6 +42,9 @@ class ShopModule extends CWebModule
 	public $currencySymbol = '$';
 	public $currency = 'HKD';
 	public $productView = 'view';
+	public $sellView = 'view';
+	public $lifestyleView = 'view';
+	public $qnaView = 'view';
 
 	// Set this to a valid email address to send a message once a order
 	// comes in.
@@ -902,6 +910,17 @@ class ShopModule extends CWebModule
 	// Where the uploaded product images are stored, started from approot/:
 	public $productImagesFolder = 'images/product/'; 
 	public $productThumbImagesFolder = 'images/product/thumb/';
+	
+	public $sellImagesFolder = 'images/app_img/SELL/';
+	public $sellThumbImagesFolder = 'images/app_img/SELL/thumb/';
+	
+	public $lifestyleImagesFolder = 'images/app_img/LIFESTYLE/';
+	public $lifestyleThumbImagesFolder = 'images/app_img/LIFESTYLE/thumb/';
+	
+	public $qnaImagesFolder = 'images/app_img/QNA/';
+	public $qnaThumbImagesFolder = 'images/app_img/QNA/thumb/';
+	
+	
 	// Images uploaded by the customer (for example, for Poster Shops)
 	public $uploadedImagesFolder = 'uploadedimages'; 
 	
